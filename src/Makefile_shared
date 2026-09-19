@@ -1,0 +1,8 @@
+CC = gcc
+INCLUDES =
+LIBS =
+CFLAGS = -O0 -ggdb3 -Wall
+
+OBJ_DIR = ../_obj
+HEADERS = pmsg.h pager.h schema.h freelist.h interpreter.h
+OBJS = $(addprefix $(OBJ_DIR)/,pmsg.o pager.o schema.o freelist.o interpreter.o)

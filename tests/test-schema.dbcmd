@@ -1,0 +1,27 @@
+# test schema
+
+show database
+
+drop table # need a table
+drop table people;
+drop table clubs ;
+drop table in_club ;#
+
+show database
+
+# table schemas
+print ###test create table###
+create stranger;                              # create do not know stranger
+create table no_type_tbl (errfield, num int); # attr missing type
+create table wrong_type_tbl (afield any, num int);  # attr unknown type
+create table wrong_strtype_tbl (s str(5), num int); # wrong str type
+create table sep_err_tbl (a int; num int);          # wrong seperator
+
+create table people ( Pid int, name str[23], num_steps int );
+create table clubs (Cid int, name str[19]) ;
+create table in_club (Id int , Cid int, Pid int) ;
+
+show database
+show impossible
+
+quit

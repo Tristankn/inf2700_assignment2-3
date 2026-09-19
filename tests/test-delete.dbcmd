@@ -1,0 +1,35 @@
+drop table A;
+create table A (a1 int, a2 int);
+insert into A values (0, 11);
+insert into A values (0, 22);
+insert into A values (2, 33);
+insert into A values (3, 44);
+insert into A values (4, 55);
+
+print ### before deletion ###
+select * from A;
+
+# delete one row
+delete from A where a1 = 2;
+
+print ### empty result ###
+select * from A where a1 = 2;
+
+# delete multiple rows
+delete from A where a1 = 0;
+
+print ### after two deletions ###
+select * from A;
+
+# delete everything
+delete from A;
+
+print ### empty result ###
+select * from A;
+
+insert into A values (7, 99);
+
+print ### after last insert ###
+select * from A;
+
+quit
