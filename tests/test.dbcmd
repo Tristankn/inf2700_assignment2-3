@@ -1,0 +1,70 @@
+# table schema
+create table numbers (Id int, value int, other int);
+
+# insert rows
+print ###test integer insert###
+insert into numbers values (1, -10, 10);
+insert into numbers values (2, 0, 0);
+insert into numbers values (3, 5, 10);
+insert into numbers values (4, 10, 5);
+insert into numbers values (5, 10, 10);
+insert into numbers values (6, 20, -5);
+
+show database
+
+# equality
+print ###test integer =###
+print select * from numbers where value = 10;
+select * from numbers where value = 10;
+
+print select * from numbers where value = 0;
+select * from numbers where value = 0;
+
+print select * from numbers where value = -10;
+select * from numbers where value = -10;
+
+# greater than
+print ###test integer >###
+print select * from numbers where value > 10;
+select * from numbers where value > 10;
+
+print select * from numbers where value > 0;
+select * from numbers where value > 0;
+
+print select * from numbers where value > -10;
+select * from numbers where value > -10;
+
+# greater than or equal
+print ###test integer >=###
+print select * from numbers where value >= 10;
+select * from numbers where value >= 10;
+
+print select * from numbers where value >= 0;
+select * from numbers where value >= 0;
+
+print select * from numbers where value >= -10;
+select * from numbers where value >= -10;
+
+# less than
+print ###test integer <###
+print select * from numbers where value < 10;
+select * from numbers where value < 10;
+
+print select * from numbers where value < 0;
+select * from numbers where value < 0;
+
+print select * from numbers where value < -10;
+select * from numbers where value < -10;
+
+# less than or equal
+print ###test integer <=###
+print select * from numbers where value <= 10;
+select * from numbers where value <= 10;
+
+print select * from numbers where value <= 0;
+select * from numbers where value <= 0;
+
+print select * from numbers where value <= -10;
+select * from numbers where value <= -10;
+
+quit

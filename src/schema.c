@@ -648,7 +648,13 @@ int get_record(record r, schema_p s) {
   return pg ? get_page_record(pg, r, s) : 0;
 }
 
+// Integer operations
 static int int_equal(int x, int y) { return x == y; }
+static int int_lesser_than(int x, int y) { return x < y; }
+static int int_lesser_or_equal(int x, int y) { return x <= y; }
+static int int_greater_than(int x, int y) { return x > y; }
+static int int_greater_or_equal(int x, int y) { return x >= y; }
+static int int_not_equal(int x, int y) { return x != y; }
 
 static page_p find_page_record_int_val(schema_p s, int offset,
                                        int (*op)(int, int), int val) {
@@ -659,7 +665,7 @@ static page_p find_page_record_int_val(schema_p s, int offset,
   for (; pg; pg = get_page_for_next_record(s)) {
     pos = page_current_pos(pg);
     rec_val = page_get_int_at(pg, pos + offset);
-    if ((*op)(val, rec_val)) {
+    if ((*op)(rec_val, val)) {
       page_set_current_pos(pg, pos);
       return pg;
     } else
@@ -803,13 +809,40 @@ static int is_equality(char const *op) {
   }
 }
 
+
 tbl_p table_search(tbl_p t, char const *attr, char const *op, int val) {
   schema_p s = t->sch;
   field_desc_p f = field_for_search(t, attr, op);
-  if (!f || !is_equality(op))
-    return 0;
 
-  int (*cmp_op)(int, int) = int_equal;
+  /* 
+    if (!f || !is_equality(op))
+    return 0;
+  */
+
+  /* Create a function pointer and make it reference the correct int operation */
+  int (*operation)(int, int);
+
+  if (strcmp(op, "=") == 0){
+    operation = int_equal;
+  }
+  else if (strcmp(op, "<") == 0){
+    operation = int_lesser_than;
+  }
+  else if (strcmp(op, "<=") == 0){
+    operation = int_lesser_or_equal;
+  }
+  else if (strcmp(op, ">") == 0){
+    operation = int_greater_than;
+  }
+  else if (strcmp(op, ">=") == 0){
+    operation = int_greater_or_equal;
+  }
+  else if (strcmp(op, "!=") == 0){
+    operation = int_not_equal;
+  }
+  
+  int (*cmp_op)(int, int) = operation;
+
   char *tmp_name = tmp_schema_name("select", s->name);
   schema_p res_sch = copy_schema(s, tmp_name);
   free(tmp_name);
